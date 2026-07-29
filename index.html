@@ -3,229 +3,219 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام الاستعلام عن نتائج الطلاب الرسمي</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <title>البوابة الرسمية للاستعلام عن النتائج</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #1e3a8a; /* أزرق داكن رسمي */
-            --primary-light: #3b82f6;
-            --bg-color: #f8fafc;
-            --card-bg: #ffffff;
+            --primary: #1e3a8a;       /* أزرق ملكي داكن (رسمي) */
+            --primary-hover: #1e40af;
+            --bg-body: #f1f5f9;       /* رمادي فاتح جداً للخلفية */
+            --bg-card: #ffffff;
             --text-main: #0f172a;
-            --text-secondary: #475569;
-            --border-color: #e2e8f0;
-            --success-color: #15803d;
-            --success-bg: #dcfce7;
-            --danger-color: #991b1b;
-            --danger-bg: #fef2f2;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success: #059669;
+            --success-bg: #ecfdf5;
+            --danger: #b91c1c;        /* أحمر داكن رسمي */
+            --danger-bg: #fef2f2;     /* خلفية حمراء فاتحة جداً وعصرية */
+            --danger-border: #fecaca;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Cairo', sans-serif;
-            background-color: var(--bg-color);
+            background-color: var(--bg-body);
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 24px 24px;
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: flex-start;
             padding: 40px 20px;
-            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
-            background-size: 24px 24px;
         }
 
-        .main-container {
+        .main-wrapper {
             width: 100%;
-            max-width: 850px;
-            background: var(--card-bg);
-            border-radius: 8px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
-            border: 1px solid var(--border-color);
+            max-width: 800px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* البطاقة الرئيسية */
+        .card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
             overflow: hidden;
         }
 
-        /* Header رسمي */
-        .official-header {
-            background: var(--primary-color);
+        /* الرأس الرسمي */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, #172554 100%);
             color: white;
-            padding: 30px 40px;
+            padding: 32px 40px;
             text-align: center;
-            border-bottom: 4px solid #fbbf24; /* خط ذهبي رسمي */
             position: relative;
         }
 
-        .official-header svg {
-            width: 48px;
-            height: 48px;
-            margin-bottom: 12px;
-            opacity: 0.9;
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #fbbf24, #f59e0b, #fbbf24); /* خط ذهبي أنيق */
         }
 
-        .official-header h1 {
-            font-size: 1.75rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            margin-bottom: 8px;
+        .header-icon {
+            width: 56px;
+            height: 56px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        .official-header p {
-            font-size: 0.95rem;
-            opacity: 0.85;
-            font-weight: 400;
-        }
+        .header h1 { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 8px; }
+        .header p { font-size: 0.95rem; opacity: 0.85; font-weight: 400; }
 
         /* قسم البحث */
         .search-section {
-            padding: 30px 40px;
-            border-bottom: 1px solid var(--border-color);
+            padding: 32px 40px;
+            border-bottom: 1px solid var(--border);
             background: #fafafa;
         }
 
-        .search-form {
+        .search-box {
             display: flex;
             gap: 12px;
-            max-width: 600px;
+            max-width: 500px;
             margin: 0 auto;
         }
 
-        .input-group {
+        .input-wrapper {
             flex: 1;
             position: relative;
         }
 
-        .input-group label {
+        .input-wrapper label {
             display: block;
             font-size: 0.85rem;
             font-weight: 700;
-            color: var(--text-secondary);
-            margin-bottom: 6px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
         }
 
         input[type="text"] {
             width: 100%;
-            padding: 12px 16px;
+            padding: 14px 16px;
             font-size: 1rem;
             font-family: 'Cairo', sans-serif;
-            border: 2px solid var(--border-color);
-            border-radius: 6px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
             outline: none;
             transition: all 0.2s ease;
             background: white;
+            color: var(--text-main);
         }
 
         input[type="text"]:focus {
-            border-color: var(--primary-light);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.1);
         }
 
-        .btn-search {
-            padding: 12px 28px;
+        .btn-primary {
+            padding: 14px 28px;
             font-size: 1rem;
             font-weight: 700;
             font-family: 'Cairo', sans-serif;
             color: white;
-            background: var(--primary-color);
+            background: var(--primary);
             border: none;
-            border-radius: 6px;
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.2s ease;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
-            margin-top: 24px; /* لمحاذاة الزر مع حقل الإدخال */
+            margin-top: 28px; /* لمحاذاة الزر مع حقل الإدخال */
+            min-width: 120px;
         }
 
-        .btn-search:hover {
-            background: #1e40af;
+        .btn-primary:hover {
+            background: var(--primary-hover);
             transform: translateY(-1px);
-            box-shadow: 0 4px 6px -1px rgba(30, 58, 138, 0.2);
+            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.25);
         }
 
-        .btn-search:active {
-            transform: translateY(0);
-        }
+        .btn-primary:active { transform: translateY(0); }
+        .btn-primary:disabled { background: #94a3b8; cursor: not-allowed; transform: none; box-shadow: none; }
 
-        .btn-search:disabled {
-            background: #94a3b8;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .message-box {
+        .message {
             text-align: center;
             padding: 12px;
             margin-top: 16px;
-            border-radius: 6px;
+            border-radius: 8px;
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             display: none;
         }
-
-        .message-box.error {
-            background: var(--danger-bg);
-            color: var(--danger-color);
-            border: 1px solid #fecaca;
-            display: block;
-        }
-
-        .message-box.loading {
-            background: #eff6ff;
-            color: var(--primary-color);
-            border: 1px solid #bfdbfe;
-            display: block;
-        }
+        .message.error { background: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger-border); display: block; }
+        .message.loading { background: #eff6ff; color: var(--primary); border: 1px solid #bfdbfe; display: block; }
 
         /* قسم النتيجة */
         .result-section {
             padding: 40px;
             display: none;
-            animation: fadeIn 0.4s ease-out;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .student-info-bar {
+        .student-meta {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            gap: 24px;
             background: #f8fafc;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 20px;
-            margin-bottom: 30px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 32px;
         }
 
-        .info-item label {
+        .meta-item label {
             display: block;
             font-size: 0.8rem;
             font-weight: 700;
-            color: var(--text-secondary);
+            color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
-        .info-item span {
+        .meta-item span {
             display: block;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             font-weight: 700;
             color: var(--text-main);
         }
 
-        /* جدول العلامات الرسمي */
-        .grades-table-container {
-            overflow-x: auto;
-            margin-bottom: 30px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
+        /* جدول العلامات العصري */
+        .table-container {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 32px;
         }
 
         .grades-table {
@@ -235,226 +225,184 @@
         }
 
         .grades-table th {
-            background: #f1f5f9;
-            color: var(--text-secondary);
+            background: #f8fafc;
+            color: var(--text-muted);
             font-weight: 700;
-            padding: 14px 16px;
+            padding: 16px 20px;
             text-align: right;
-            border-bottom: 2px solid var(--border-color);
-            white-space: nowrap;
+            border-bottom: 2px solid var(--border);
+            font-size: 0.85rem;
+            text-transform: uppercase;
         }
 
         .grades-table td {
-            padding: 14px 16px;
-            border-bottom: 1px solid var(--border-color);
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
             color: var(--text-main);
         }
 
-        .grades-table tr:last-child td {
-            border-bottom: none;
-        }
+        .grades-table tr:last-child td { border-bottom: none; }
+        .grades-table tr:hover { background: #fafafa; transition: background 0.2s; }
 
-        .grades-table tr:hover {
-            background: #fafafa;
-        }
-
-        /* تنسيق الخانة الحمراء للراسب */
-        .failed-grade {
+        /* تنسيق الخانة الحمراء للعلامات الأقل من 50 (عصري ورسمي) */
+        .grade-fail {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             background-color: var(--danger-bg);
-            color: var(--danger-color);
+            color: var(--danger);
             font-weight: 800;
-            padding: 4px 12px;
-            border-radius: 4px;
-            border: 1px solid #fecaca;
-            display: inline-block;
-            min-width: 50px;
-            text-align: center;
+            padding: 6px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--danger-border);
+            min-width: 60px;
+            box-shadow: 0 2px 4px rgba(185, 28, 28, 0.05);
         }
 
-        .pass-grade {
-            font-weight: 600;
-            color: var(--success-color);
+        .grade-pass {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--success);
+            min-width: 60px;
         }
 
         /* قسم الملخص (المعدل والحالة) */
-        .summary-section {
+        .summary-footer {
             display: flex;
             justify-content: flex-end;
-            gap: 20px;
-            padding-top: 20px;
-            border-top: 2px solid var(--border-color);
+            gap: 16px;
+            padding-top: 24px;
+            border-top: 2px solid var(--border);
         }
 
-        .summary-box {
+        .summary-card {
             text-align: center;
-            padding: 16px 32px;
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
+            padding: 20px 32px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
             background: white;
-            min-width: 160px;
+            min-width: 180px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
 
-        .summary-box label {
+        .summary-card label {
             display: block;
             font-size: 0.85rem;
-            color: var(--text-secondary);
+            color: var(--text-muted);
             font-weight: 600;
             margin-bottom: 8px;
         }
 
-        .summary-box .value {
+        .summary-card .value {
             display: block;
-            font-size: 1.5rem;
+            font-size: 1.75rem;
             font-weight: 800;
         }
 
-        .status-pass {
+        .status-success {
             background: var(--success-bg);
-            border-color: #bbf7d0;
+            border-color: #a7f3d0;
         }
-        .status-pass .value {
-            color: var(--success-color);
-        }
+        .status-success .value { color: var(--success); }
 
-        .status-fail {
-            background: var(--danger-bg);
-            border-color: #fecaca;
-        }
-        .status-fail .value {
-            color: var(--danger-color);
-        }
-
-        /* تنسيق الطباعة الرسمي */
+        /* تنسيق الطباعة الاحترافي */
         @media print {
-            body {
-                background: white;
-                padding: 0;
-            }
-            .main-container {
-                box-shadow: none;
-                border: 2px solid #000;
-                max-width: 100%;
-            }
-            .search-section, .btn-search {
-                display: none !important;
-            }
-            .official-header {
-                background: white !important;
-                color: black !important;
-                border-bottom: 2px solid black;
-                -webkit-print-color-adjust: exact;
-            }
-            .official-header svg {
-                fill: black;
-            }
-            .grades-table th {
-                background: #eee !important;
-                -webkit-print-color-adjust: exact;
-            }
-            .failed-grade {
-                border: 1px solid red;
-                color: red;
-                -webkit-print-color-adjust: exact;
-            }
+            body { background: white; padding: 0; }
+            .main-wrapper { max-width: 100%; box-shadow: none; }
+            .card { box-shadow: none; border: 2px solid #000; }
+            .search-section, .btn-primary { display: none !important; }
+            .header { background: white !important; color: black !important; border-bottom: 2px solid black; }
+            .header::after { display: none; }
+            .header-icon { border: 1px solid #000; color: #000; }
+            .grades-table th { background: #eee !important; -webkit-print-color-adjust: exact; }
+            .grade-fail { border: 1px solid red; color: red; -webkit-print-color-adjust: exact; }
         }
 
-        @media (max-width: 600px) {
-            .search-form {
-                flex-direction: column;
-            }
-            .btn-search {
-                width: 100%;
-                margin-top: 8px;
-                justify-content: center;
-            }
-            .summary-section {
-                flex-direction: column;
-            }
-            .summary-box {
-                width: 100%;
-            }
-            .official-header {
-                padding: 20px;
-            }
-            .result-section {
-                padding: 20px;
-            }
+        @media (max-width: 640px) {
+            .search-box { flex-direction: column; }
+            .btn-primary { width: 100%; margin-top: 8px; }
+            .summary-footer { flex-direction: column; }
+            .summary-card { width: 100%; }
+            .header, .search-section, .result-section { padding: 24px 20px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="main-container">
-        <!-- رأس الصفحة الرسمي -->
-        <div class="official-header">
-            <!-- أيقونة شعار تعليمي رسمي -->
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-            </svg>
-            <h1>نظام الاستعلام عن نتائج الطلاب</h1>
-            <p>الرجاء إدخال كود الطالب الرباعي أو الخماسي للاستعلام عن النتيجة الرسمية</p>
-        </div>
-
-        <!-- قسم البحث -->
-        <div class="search-section">
-            <div class="search-form">
-                <div class="input-group">
-                    <label for="studentCode">كود الطالب</label>
-                    <input type="text" id="studentCode" placeholder="مثال: 1024" autocomplete="off" inputmode="numeric">
-                </div>
-                <button class="btn-search" id="searchBtn" onclick="searchResult()">
-                    <span>استعلام</span>
-                    <svg id="btnSpinner" style="display: none; width: 18px; height: 18px; animation: spin 1s linear infinite;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+    <div class="main-wrapper">
+        <div class="card">
+            <!-- الرأس -->
+            <div class="header">
+                <div class="header-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                        <path d="M6 12v5c3 3 9 3 12 0v-5"/>
                     </svg>
-                </button>
-            </div>
-            <div id="messageBox" class="message-box"></div>
-        </div>
-
-        <!-- قسم عرض النتيجة -->
-        <div id="resultSection" class="result-section">
-            <!-- معلومات الطالب الأساسية -->
-            <div class="student-info-bar">
-                <div class="info-item">
-                    <label>اسم الطالب</label>
-                    <span id="resName">-</span>
                 </div>
-                <div class="info-item">
-                    <label>كود الطالب</label>
-                    <span id="resCode">-</span>
-                </div>
-                <div class="info-item">
-                    <label>الصف الدراسي</label>
-                    <span id="resClass">-</span>
-                </div>
+                <h1>البوابة الرسمية للاستعلام عن النتائج</h1>
+                <p>أدخل كود الطالب الرسمي أدناه لعرض كشف العلامات المعتمد</p>
             </div>
 
-            <!-- جدول العلامات -->
-            <div class="grades-table-container">
-                <table class="grades-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 60%;">المادة الدراسية</th>
-                            <th style="width: 40%; text-align: center;">العلامة</th>
-                        </tr>
-                    </thead>
-                    <tbody id="gradesBody">
-                        <!-- سيتم ملء المواد هنا ديناميكياً -->
-                    </tbody>
-                </table>
+            <!-- البحث -->
+            <div class="search-section">
+                <div class="search-box">
+                    <div class="input-wrapper">
+                        <label for="studentCode">كود الطالب</label>
+                        <input type="text" id="studentCode" placeholder="مثال: 1024" autocomplete="off" inputmode="numeric">
+                    </div>
+                    <button class="btn-primary" id="searchBtn" onclick="searchResult()">
+                        <span>استعلام</span>
+                        <svg id="btnSpinner" style="display: none; width: 18px; height: 18px; animation: spin 1s linear infinite;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+                        </svg>
+                    </button>
+                </div>
+                <div id="messageBox" class="message"></div>
             </div>
 
-            <!-- ملخص النتيجة (يظهر فقط إذا لم يكن راسباً) -->
-            <div id="summarySection" class="summary-section">
-                <div class="summary-box">
-                    <label>المعدل العام</label>
-                    <span class="value" id="resAverage">0.00</span>
+            <!-- النتيجة -->
+            <div id="resultSection" class="result-section">
+                <div class="student-meta">
+                    <div class="meta-item">
+                        <label>اسم الطالب</label>
+                        <span id="resName">-</span>
+                    </div>
+                    <div class="meta-item">
+                        <label>كود الطالب</label>
+                        <span id="resCode">-</span>
+                    </div>
+                    <div class="meta-item">
+                        <label>الصف الدراسي</label>
+                        <span id="resClass">-</span>
+                    </div>
                 </div>
-                <div class="summary-box" id="statusBox">
-                    <label>الحالة النهائية</label>
-                    <span class="value" id="resStatus">-</span>
+
+                <div class="table-container">
+                    <table class="grades-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 65%;">المادة الدراسية</th>
+                                <th style="width: 35%; text-align: center;">العلامة</th>
+                            </tr>
+                        </thead>
+                        <tbody id="gradesBody">
+                            <!-- يتم الملء تلقائياً -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- الملخص (يتم إخفاؤه برمجياً إذا كان راسباً) -->
+                <div id="summaryFooter" class="summary-footer">
+                    <div class="summary-card">
+                        <label>المعدل العام</label>
+                        <span class="value" id="resAverage">0.00</span>
+                    </div>
+                    <div class="summary-card status-success">
+                        <label>الحالة النهائية</label>
+                        <span class="value" id="resStatus">ناجح</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -465,8 +413,8 @@
         let sheetData = [];
         let isDataLoaded = false;
 
-        // مفاتيح البيانات الأساسية لاستبعادها من قائمة المواد
-        const META_KEYS = ['الكود', 'الاسم', 'الصف', 'المعدل', 'النتيجة', 'الحالة', 'ملاحظات'];
+        // الأعمدة التي لا تعتبر مواد دراسية
+        const META_KEYS = ['الكود', 'الاسم', 'الصف', 'المعدل', 'النتيجة', 'الحالة', 'ملاحظات', 'الرقم'];
 
         async function fetchSheetData() {
             const btn = document.getElementById('searchBtn');
@@ -475,8 +423,8 @@
             
             btn.disabled = true;
             spinner.style.display = 'block';
-            msgBox.className = 'message-box loading';
-            msgBox.textContent = 'جاري الاتصال بقاعدة البيانات وجلب السجلات...';
+            msgBox.className = 'message loading';
+            msgBox.textContent = 'جاري الاتصال الآمن بقاعدة البيانات...';
             msgBox.style.display = 'block';
 
             try {
@@ -488,8 +436,8 @@
                 msgBox.style.display = 'none';
             } catch (error) {
                 console.error('Error:', error);
-                msgBox.className = 'message-box error';
-                msgBox.textContent = 'عذراً، حدث خطأ في الاتصال بالخادم. يرجى تحديث الصفحة والمحاولة لاحقاً.';
+                msgBox.className = 'message error';
+                msgBox.textContent = 'عذراً، تعذر الاتصال بالخادم. يرجى تحديث الصفحة.';
             } finally {
                 btn.disabled = false;
                 spinner.style.display = 'none';
@@ -502,7 +450,7 @@
             const data = [];
             
             for (let i = 1; i < lines.length; i++) {
-                // معالجة متقدمة لفصل القيم مع مراعاة الفواصل داخل النصوص
+                // معالجة متقدمة لفصل القيم مع مراعاة الفواصل داخل النصوص المقتبسة
                 const values = lines[i].match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || lines[i].split(',');
                 if (values.length >= headers.length) {
                     const obj = {};
@@ -521,31 +469,30 @@
             const msgBox = document.getElementById('messageBox');
             const resultSection = document.getElementById('resultSection');
             
-            // إعادة تعيين الحالة
             msgBox.style.display = 'none';
             resultSection.style.display = 'none';
             
             if (!isDataLoaded) {
-                msgBox.className = 'message-box error';
-                msgBox.textContent = 'البيانات لا تزال قيد التحميل، يرجى الانتظار بضع ثوانٍ...';
+                msgBox.className = 'message error';
+                msgBox.textContent = 'البيانات قيد التحميل، يرجى الانتظار...';
                 msgBox.style.display = 'block';
                 return;
             }
             
             if (!codeInput) {
-                msgBox.className = 'message-box error';
+                msgBox.className = 'message error';
                 msgBox.textContent = 'يرجى إدخال كود الطالب بشكل صحيح.';
                 msgBox.style.display = 'block';
                 return;
             }
             
-            // البحث عن الطالب (مقارنة مرنة)
+            // البحث عن الطالب
             const student = sheetData.find(row => row['الكود'] && row['الكود'].toString().trim() === codeInput);
             
             if (!student) {
-                // إذا لم يوجد، لا يتم عرض أي نتيجة (فقط رسالة خطأ رسمية)
-                msgBox.className = 'message-box error';
-                msgBox.textContent = 'لم يتم العثور على أي سجلات مطابقة لهذا الكود. يرجى التأكد من الرقم والمحاولة مجدداً.';
+                // كما طُلب: لا يعرض شيئاً سوى رسالة خطأ رسمية بسيطة، ولا يظهر هيكل النتيجة
+                msgBox.className = 'message error';
+                msgBox.textContent = 'لم يتم العثور على سجلات مطابقة لهذا الكود.';
                 msgBox.style.display = 'block';
                 return;
             }
@@ -555,14 +502,13 @@
             document.getElementById('resCode').textContent = student['الكود'] || codeInput;
             document.getElementById('resClass').textContent = student['الصف'] || 'غير محدد';
             
-            // بناء جدول المواد ديناميكياً
+            // بناء جدول المواد
             const gradesBody = document.getElementById('gradesBody');
             gradesBody.innerHTML = '';
             
             let hasFailedSubject = false;
             
             Object.keys(student).forEach(key => {
-                // تجاهل المفاتيح الأساسية والمفارغ
                 if (META_KEYS.includes(key) || !student[key] || student[key].trim() === '') return;
                 
                 const gradeVal = parseFloat(student[key]);
@@ -574,7 +520,7 @@
                 tr.innerHTML = `
                     <td style="font-weight: 600;">${key}</td>
                     <td style="text-align: center;">
-                        <span class="${isFailed ? 'failed-grade' : 'pass-grade'}">
+                        <span class="${isFailed ? 'grade-fail' : 'grade-pass'}">
                             ${isNaN(gradeVal) ? student[key] : gradeVal}
                         </span>
                     </td>
@@ -582,52 +528,33 @@
                 gradesBody.appendChild(tr);
             });
             
-            // منطق عرض/إخفاء المعدل بناءً على حالة "راسب"
-            const summarySection = document.getElementById('summarySection');
-            const statusBox = document.getElementById('statusBox');
+            // المنطق الحاسم: إخفاء المعدل إذا كان راسباً
+            const summaryFooter = document.getElementById('summaryFooter');
             const statusText = student['النتيجة'] || student['الحالة'] || 'غير محدد';
             
-            // التحقق الحاسم: إذا كانت النتيجة تحتوي على كلمة "راسب"
             if (statusText.includes('راسب') || hasFailedSubject) {
-                // إخفاء قسم المعدل تماماً كما طُلب
-                summarySection.style.display = 'none';
-                
-                // إضافة ملاحظة رسمية صغيرة في الأسفل توضح حالة الرسوب للمواد فقط
-                const failNote = document.createElement('div');
-                failNote.style.cssText = 'text-align: center; margin-top: 20px; color: #991b1b; font-weight: 600; font-size: 0.9rem; padding: 10px; background: #fef2f2; border-radius: 6px; border: 1px solid #fecaca;';
-                failNote.textContent = 'تنويه: الطالب غير مستوفي لشروط النجاح في بعض المواد.';
-                
-                // إزالة أي ملاحظة سابقة قبل إضافة جديدة
-                const oldNote = document.getElementById('failNote');
-                if(oldNote) oldNote.remove();
-                failNote.id = 'failNote';
-                document.getElementById('resultSection').appendChild(failNote);
-                
+                // إخفاء قسم المعدل تماماً
+                summaryFooter.style.display = 'none';
             } else {
-                // إظهار المعدل والحالة (ناجح)
-                const oldNote = document.getElementById('failNote');
-                if(oldNote) oldNote.remove();
-                
-                summarySection.style.display = 'flex';
+                // إظهار المعدل والحالة
+                summaryFooter.style.display = 'flex';
                 document.getElementById('resAverage').textContent = student['المعدل'] || '0.00';
                 document.getElementById('resStatus').textContent = statusText;
-                
-                statusBox.className = 'summary-box status-pass';
             }
             
-            // إظهار قسم النتيجة بتأثير رسمي هادئ
+            // إظهار القسم بتأثير حركي ناعم
             resultSection.style.display = 'block';
         }
 
-        // دعم مفتاح Enter للبحث
+        // دعم مفتاح Enter
         document.getElementById('studentCode').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                searchResult();
-            }
+            if (e.key === 'Enter') searchResult();
         });
 
-        // بدء التحميل عند فتح الصفحة
+        // بدء التحميل
         window.addEventListener('DOMContentLoaded', fetchSheetData);
+        
+        @keyframes spin { to { transform: rotate(360deg); } }
     </script>
 </body>
 </html>
