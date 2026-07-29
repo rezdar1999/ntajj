@@ -3,26 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة النتائج الدراسية</title>
+    <title>نظام الاستعلام عن نتائج الطلاب</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #0a0a0f;
-            --bg-card: rgba(20, 20, 30, 0.6);
-            --bg-card-hover: rgba(30, 30, 45, 0.7);
-            --border: rgba(255, 255, 255, 0.1);
-            --border-hover: rgba(255, 255, 255, 0.2);
-            --text-primary: #ffffff;
-            --text-secondary: rgba(255, 255, 255, 0.7);
-            --text-muted: rgba(255, 255, 255, 0.5);
-            --accent-1: #6366f1;
-            --accent-2: #8b5cf6;
-            --accent-3: #ec4899;
-            --success: #10b981;
-            --success-bg: rgba(16, 185, 129, 0.15);
-            --danger: #ef4444;
-            --danger-bg: rgba(239, 68, 68, 0.15);
-            --danger-border: rgba(239, 68, 68, 0.4);
+            --primary: #1e40af;
+            --primary-dark: #1e3a8a;
+            --primary-light: #3b82f6;
+            --bg: #f9fafb;
+            --card-bg: #ffffff;
+            --text-main: #111827;
+            --text-secondary: #6b7280;
+            --border: #e5e7eb;
+            --success: #059669;
+            --success-bg: #d1fae5;
+            --danger: #dc2626;
+            --danger-bg: #fee2e2;
+            --danger-border: #fca5a5;
         }
 
         * {
@@ -33,89 +30,75 @@
 
         body {
             font-family: 'Cairo', sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-primary);
+            background: var(--bg);
+            color: var(--text-main);
             min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        /* خلفية متدرجة متحركة */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
-            z-index: 0;
-            animation: bgShift 20s ease infinite;
-        }
-
-        @keyframes bgShift {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+        /* Header رسمي */
+        .header {
+            background: var(--primary-dark);
+            color: white;
+            padding: 24px 0;
+            border-bottom: 4px solid #fbbf24;
         }
 
         .container {
             max-width: 900px;
             margin: 0 auto;
             padding: 0 24px;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Header */
-        .header {
-            padding: 32px 0;
-            border-bottom: 1px solid var(--border);
-            backdrop-filter: blur(20px);
-            background: rgba(10, 10, 15, 0.5);
-            position: sticky;
-            top: 0;
-            z-index: 100;
         }
 
         .header-content {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 16px;
         }
 
-        .logo {
+        .header-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-text h1 {
             font-size: 1.5rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--accent-1), var(--accent-3));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .header-text p {
+            font-size: 0.875rem;
+            opacity: 0.9;
         }
 
         /* قسم البحث */
         .search-section {
-            padding: 80px 0;
+            padding: 60px 0;
+            background: white;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .search-title {
             text-align: center;
+            margin-bottom: 32px;
         }
 
-        .search-section h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 16px;
-            background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.7) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -1px;
+        .search-title h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 8px;
         }
 
-        .search-section p {
-            font-size: 1.25rem;
+        .search-title p {
+            font-size: 1rem;
             color: var(--text-secondary);
-            margin-bottom: 48px;
         }
 
         .search-form {
@@ -127,61 +110,38 @@
 
         .search-input {
             flex: 1;
-            padding: 18px 24px;
-            font-size: 1.125rem;
+            padding: 14px 20px;
+            font-size: 1rem;
             font-family: 'Cairo', sans-serif;
-            background: var(--bg-card);
             border: 2px solid var(--border);
-            border-radius: 12px;
-            color: var(--text-primary);
+            border-radius: 8px;
             outline: none;
-            transition: all 0.3s;
-            backdrop-filter: blur(10px);
+            transition: all 0.2s;
+            background: white;
         }
 
         .search-input:focus {
-            border-color: var(--accent-1);
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
-        }
-
-        .search-input::placeholder {
-            color: var(--text-muted);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
         }
 
         .search-btn {
-            padding: 18px 36px;
-            font-size: 1.125rem;
+            padding: 14px 32px;
+            font-size: 1rem;
             font-weight: 700;
             font-family: 'Cairo', sans-serif;
             color: white;
-            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+            background: var(--primary);
             border: none;
-            border-radius: 12px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 10px 30px -5px rgba(99, 102, 241, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .search-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .search-btn:hover::before {
-            left: 100%;
+            transition: all 0.2s;
         }
 
         .search-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 40px -5px rgba(99, 102, 241, 0.5);
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
         }
 
         .search-btn:active {
@@ -189,113 +149,84 @@
         }
 
         .message {
-            margin-top: 24px;
-            padding: 16px 24px;
-            border-radius: 12px;
+            margin-top: 20px;
+            padding: 14px 20px;
+            border-radius: 8px;
             font-weight: 600;
+            text-align: center;
             display: none;
-            backdrop-filter: blur(10px);
         }
 
         .message.error {
             background: var(--danger-bg);
             color: var(--danger);
-            border: 1px solid var(--danger-border);
+            border: 2px solid var(--danger-border);
             display: block;
         }
 
         /* قسم النتيجة */
         .result-section {
             display: none;
-            padding: 0 0 80px;
+            padding: 60px 0;
         }
 
         .result-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 24px;
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 12px;
             overflow: hidden;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
 
-        /* قسم اسم الطالب الكبير */
-        .student-name-section {
-            padding: 48px 40px;
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
-            border-bottom: 1px solid var(--border);
+        /* قسم اسم الطالب */
+        .student-name-header {
+            padding: 40px;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: white;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .student-name-section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
-            animation: rotate 30s linear infinite;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            border-bottom: 3px solid #fbbf24;
         }
 
         .student-name-label {
             display: block;
             font-size: 0.875rem;
             font-weight: 600;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            opacity: 0.9;
             margin-bottom: 12px;
-            position: relative;
-            z-index: 1;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .student-name-value {
             display: block;
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 900;
-            background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.8) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1.2;
-            position: relative;
-            z-index: 1;
-            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            line-height: 1.3;
+            margin-bottom: 20px;
         }
 
         .student-meta {
             display: flex;
             justify-content: center;
             gap: 40px;
-            margin-top: 24px;
-            position: relative;
-            z-index: 1;
+            flex-wrap: wrap;
         }
 
         .meta-item {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
+            text-align: center;
         }
 
         .meta-item label {
+            display: block;
             font-size: 0.75rem;
-            color: var(--text-muted);
-            font-weight: 600;
+            opacity: 0.8;
+            margin-bottom: 4px;
         }
 
         .meta-item span {
+            display: block;
             font-size: 1rem;
             font-weight: 700;
-            color: var(--text-secondary);
         }
 
         /* قسم العلامات */
@@ -303,70 +234,68 @@
             padding: 40px;
         }
 
-        .grades-section h3 {
+        .grades-title {
             font-size: 1.5rem;
             font-weight: 800;
+            color: var(--text-main);
             margin-bottom: 24px;
-            color: var(--text-primary);
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border);
         }
 
-        .grades-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 16px;
+        .grades-table {
+            width: 100%;
+            border-collapse: collapse;
         }
 
-        .grade-card {
-            padding: 20px 24px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s;
-            backdrop-filter: blur(10px);
+        .grades-table th {
+            background: #f9fafb;
+            padding: 14px 20px;
+            text-align: right;
+            font-weight: 700;
+            color: var(--text-secondary);
+            border-bottom: 2px solid var(--border);
+            font-size: 0.875rem;
         }
 
-        .grade-card:hover {
-            background: var(--bg-card-hover);
-            border-color: var(--border-hover);
-            transform: translateY(-2px);
+        .grades-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
         }
 
-        .grade-card.failed {
-            background: var(--danger-bg);
-            border-color: var(--danger-border);
-            box-shadow: 0 0 20px rgba(239, 68, 68, 0.1);
+        .grades-table tr:last-child td {
+            border-bottom: none;
         }
 
-        .grade-card.failed:hover {
-            border-color: var(--danger);
-            box-shadow: 0 0 30px rgba(239, 68, 68, 0.2);
+        .grades-table tr:hover {
+            background: #f9fafb;
         }
 
         .subject-name {
-            font-size: 1.125rem;
             font-weight: 600;
-            color: var(--text-primary);
+            color: var(--text-main);
         }
 
         .grade-value {
-            font-size: 1.75rem;
-            font-weight: 900;
-            color: var(--text-primary);
+            text-align: center;
+            font-weight: 800;
+            font-size: 1.25rem;
         }
 
-        .grade-card.failed .grade-value {
+        .grade-fail {
+            background: var(--danger-bg);
             color: var(--danger);
-            text-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+            padding: 6px 16px;
+            border-radius: 6px;
+            border: 1px solid var(--danger-border);
+            display: inline-block;
         }
 
         /* قسم الملخص */
         .summary-section {
-            padding: 40px;
-            background: rgba(0, 0, 0, 0.2);
-            border-top: 1px solid var(--border);
+            padding: 32px 40px;
+            background: #f9fafb;
+            border-top: 2px solid var(--border);
             display: flex;
             justify-content: center;
             gap: 24px;
@@ -375,36 +304,34 @@
 
         .summary-card {
             padding: 24px 48px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 10px;
             text-align: center;
-            min-width: 200px;
-            backdrop-filter: blur(10px);
+            min-width: 180px;
         }
 
         .summary-card label {
             display: block;
             font-size: 0.875rem;
-            color: var(--text-muted);
+            color: var(--text-secondary);
             font-weight: 600;
             margin-bottom: 8px;
         }
 
         .summary-card .value {
             display: block;
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 900;
         }
 
         .summary-card.success {
             background: var(--success-bg);
-            border-color: rgba(16, 185, 129, 0.4);
+            border-color: #6ee7b7;
         }
 
         .summary-card.success .value {
             color: var(--success);
-            text-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
         }
 
         .summary-card.fail {
@@ -414,12 +341,21 @@
 
         .summary-card.fail .value {
             color: var(--danger);
-            text-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 24px 0;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            border-top: 1px solid var(--border);
+            background: white;
         }
 
         @media (max-width: 768px) {
-            .search-section h1 {
-                font-size: 2.5rem;
+            .search-title h2 {
+                font-size: 1.5rem;
             }
             .search-form {
                 flex-direction: column;
@@ -428,14 +364,11 @@
                 width: 100%;
             }
             .student-name-value {
-                font-size: 2rem;
+                font-size: 1.75rem;
             }
             .student-meta {
                 flex-direction: column;
                 gap: 16px;
-            }
-            .grades-grid {
-                grid-template-columns: 1fr;
             }
             .summary-section {
                 flex-direction: column;
@@ -443,10 +376,10 @@
             .summary-card {
                 width: 100%;
             }
-            .student-name-section,
+            .student-name-header,
             .grades-section,
             .summary-section {
-                padding: 32px 24px;
+                padding: 24px;
             }
         }
 
@@ -456,8 +389,8 @@
 
         .spinner {
             display: inline-block;
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             border: 2px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             border-top-color: white;
@@ -470,7 +403,16 @@
     <div class="header">
         <div class="container">
             <div class="header-content">
-                <div class="logo">منصة النتائج</div>
+                <div class="header-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                        <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                    </svg>
+                </div>
+                <div class="header-text">
+                    <h1>نظام الاستعلام عن نتائج الطلاب</h1>
+                    <p>البوابة الرسمية للاستعلام عن النتائج الدراسية</p>
+                </div>
             </div>
         </div>
     </div>
@@ -478,8 +420,10 @@
     <!-- Search Section -->
     <div class="search-section">
         <div class="container">
-            <h1>استعلم عن نتيجتك</h1>
-            <p>أدخل كود الطالب لعرض كشف العلامات الكامل</p>
+            <div class="search-title">
+                <h2>الاستعلام عن النتيجة</h2>
+                <p>أدخل كود الطالب الخاص بك لعرض كشف العلامات</p>
+            </div>
             
             <div class="search-form">
                 <input type="text" id="studentCode" class="search-input" placeholder="كود الطالب" autocomplete="off">
@@ -497,8 +441,8 @@
     <div id="resultSection" class="result-section">
         <div class="container">
             <div class="result-card">
-                <!-- قسم اسم الطالب الكبير -->
-                <div class="student-name-section">
+                <!-- اسم الطالب -->
+                <div class="student-name-header">
                     <span class="student-name-label">اسم الطالب</span>
                     <span class="student-name-value" id="studentName">-</span>
                     <div class="student-meta">
@@ -513,19 +457,34 @@
                     </div>
                 </div>
 
-                <!-- قسم العلامات -->
+                <!-- العلامات -->
                 <div class="grades-section">
-                    <h3>العلامات</h3>
-                    <div class="grades-grid" id="gradesGrid">
-                        <!-- يتم الملء تلقائياً -->
-                    </div>
+                    <h3 class="grades-title">كشف العلامات</h3>
+                    <table class="grades-table">
+                        <thead>
+                            <tr>
+                                <th>المادة الدراسية</th>
+                                <th style="text-align: center;">العلامة</th>
+                            </tr>
+                        </thead>
+                        <tbody id="gradesBody">
+                            <!-- يتم الملء تلقائياً -->
+                        </tbody>
+                    </table>
                 </div>
 
-                <!-- قسم الملخص -->
+                <!-- الملخص -->
                 <div id="summarySection" class="summary-section">
-                    <!-- يتم الملء تلقائياً بناءً على الحالة -->
+                    <!-- يتم الملء تلقائياً -->
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container">
+            <p>© 2026 نظام نتائج الطلاب - جميع الحقوق محفوظة</p>
         </div>
     </div>
 
@@ -615,9 +574,9 @@
             document.getElementById('studentCode2').textContent = student['الكود'] || codeInput;
             document.getElementById('studentClass').textContent = student['الصف'] || 'غير محدد';
             
-            // بناء شبكة العلامات
-            const gradesGrid = document.getElementById('gradesGrid');
-            gradesGrid.innerHTML = '';
+            // بناء جدول العلامات
+            const gradesBody = document.getElementById('gradesBody');
+            gradesBody.innerHTML = '';
             
             let hasFailedSubject = false;
             
@@ -629,13 +588,16 @@
                 
                 if (isFailed) hasFailedSubject = true;
                 
-                const card = document.createElement('div');
-                card.className = `grade-card ${isFailed ? 'failed' : ''}`;
-                card.innerHTML = `
-                    <span class="subject-name">${key}</span>
-                    <span class="grade-value">${isNaN(gradeVal) ? student[key] : gradeVal}</span>
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="subject-name">${key}</td>
+                    <td class="grade-value">
+                        <span class="${isFailed ? 'grade-fail' : ''}">
+                            ${isNaN(gradeVal) ? student[key] : gradeVal}
+                        </span>
+                    </td>
                 `;
-                gradesGrid.appendChild(card);
+                gradesBody.appendChild(tr);
             });
             
             // منطق عرض الحالة والمعدل
