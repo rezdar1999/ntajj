@@ -3,22 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام نتائج الطلاب</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <title>منصة النتائج الدراسية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --accent: #f97316;
-            --accent-dark: #ea580c;
-            --black: #000000;
-            --white: #ffffff;
-            --gray-50: #fafafa;
-            --gray-100: #f5f5f5;
-            --gray-200: #e5e5e5;
-            --gray-400: #a3a3a3;
-            --gray-600: #525252;
-            --gray-900: #171717;
-            --red: #dc2626;
-            --red-light: #fee2e2;
+            --bg-dark: #0a0a0f;
+            --bg-card: rgba(20, 20, 30, 0.6);
+            --bg-card-hover: rgba(30, 30, 45, 0.7);
+            --border: rgba(255, 255, 255, 0.1);
+            --border-hover: rgba(255, 255, 255, 0.2);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-muted: rgba(255, 255, 255, 0.5);
+            --accent-1: #6366f1;
+            --accent-2: #8b5cf6;
+            --accent-3: #ec4899;
+            --success: #10b981;
+            --success-bg: rgba(16, 185, 129, 0.15);
+            --danger: #ef4444;
+            --danger-bg: rgba(239, 68, 68, 0.15);
+            --danger-border: rgba(239, 68, 68, 0.4);
         }
 
         * {
@@ -29,23 +33,51 @@
 
         body {
             font-family: 'Cairo', sans-serif;
-            background: var(--white);
-            color: var(--gray-900);
+            background: var(--bg-dark);
+            color: var(--text-primary);
             min-height: 100vh;
-            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
         }
 
-        /* Header بسيط جداً */
-        .header {
-            border-bottom: 2px solid var(--black);
-            padding: 24px 0;
-            background: var(--white);
+        /* خلفية متدرجة متحركة */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
+            z-index: 0;
+            animation: bgShift 20s ease infinite;
+        }
+
+        @keyframes bgShift {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
 
         .container {
             max-width: 900px;
             margin: 0 auto;
             padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(20px);
+            background: rgba(10, 10, 15, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .header-content {
@@ -56,36 +88,34 @@
 
         .logo {
             font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--black);
-            letter-spacing: -0.5px;
-        }
-
-        .logo span {
-            color: var(--accent);
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-3));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         /* قسم البحث */
-        .search-hero {
+        .search-section {
             padding: 80px 0;
             text-align: center;
-            background: var(--white);
         }
 
-        .search-hero h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--black);
+        .search-section h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
             margin-bottom: 16px;
+            background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.7) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             letter-spacing: -1px;
-            line-height: 1.2;
         }
 
-        .search-hero p {
-            font-size: 1.125rem;
-            color: var(--gray-600);
+        .search-section p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
             margin-bottom: 48px;
-            font-weight: 400;
         }
 
         .search-form {
@@ -97,36 +127,61 @@
 
         .search-input {
             flex: 1;
-            padding: 16px 20px;
-            font-size: 1rem;
+            padding: 18px 24px;
+            font-size: 1.125rem;
             font-family: 'Cairo', sans-serif;
-            border: 2px solid var(--gray-200);
-            border-radius: 8px;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
             outline: none;
-            transition: all 0.2s;
-            background: var(--white);
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
         }
 
         .search-input:focus {
-            border-color: var(--black);
+            border-color: var(--accent-1);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-muted);
         }
 
         .search-btn {
-            padding: 16px 32px;
-            font-size: 1rem;
+            padding: 18px 36px;
+            font-size: 1.125rem;
             font-weight: 700;
             font-family: 'Cairo', sans-serif;
-            color: var(--white);
-            background: var(--black);
+            color: white;
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px -5px rgba(99, 102, 241, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .search-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .search-btn:hover::before {
+            left: 100%;
         }
 
         .search-btn:hover {
-            background: var(--gray-900);
             transform: translateY(-2px);
+            box-shadow: 0 15px 40px -5px rgba(99, 102, 241, 0.5);
         }
 
         .search-btn:active {
@@ -135,50 +190,94 @@
 
         .message {
             margin-top: 24px;
-            padding: 16px;
-            border-radius: 8px;
+            padding: 16px 24px;
+            border-radius: 12px;
             font-weight: 600;
             display: none;
+            backdrop-filter: blur(10px);
         }
 
         .message.error {
-            background: var(--red-light);
-            color: var(--red);
-            border: 2px solid var(--red);
+            background: var(--danger-bg);
+            color: var(--danger);
+            border: 1px solid var(--danger-border);
             display: block;
         }
 
         /* قسم النتيجة */
         .result-section {
             display: none;
-            padding: 60px 0;
-            background: var(--gray-50);
+            padding: 0 0 80px;
         }
 
         .result-card {
-            background: var(--white);
-            border: 2px solid var(--black);
-            border-radius: 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* قسم اسم الطالب الكبير */
+        .student-name-section {
+            padding: 48px 40px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+            position: relative;
             overflow: hidden;
         }
 
-        .result-header {
-            padding: 32px;
-            background: var(--black);
-            color: var(--white);
+        .student-name-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
         }
 
-        .result-header h2 {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 8px;
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
-        .result-meta {
+        .student-name-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .student-name-value {
+            display: block;
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.8) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .student-meta {
             display: flex;
-            gap: 32px;
-            flex-wrap: wrap;
-            margin-top: 20px;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 24px;
+            position: relative;
+            z-index: 1;
         }
 
         .meta-item {
@@ -188,136 +287,139 @@
         }
 
         .meta-item label {
-            font-size: 0.875rem;
-            color: var(--gray-400);
+            font-size: 0.75rem;
+            color: var(--text-muted);
             font-weight: 600;
         }
 
         .meta-item span {
-            font-size: 1.125rem;
+            font-size: 1rem;
             font-weight: 700;
-            color: var(--white);
+            color: var(--text-secondary);
         }
 
-        /* جدول العلامات */
+        /* قسم العلامات */
         .grades-section {
-            padding: 32px;
+            padding: 40px;
         }
 
         .grades-section h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
+            font-size: 1.5rem;
+            font-weight: 800;
             margin-bottom: 24px;
-            color: var(--black);
+            color: var(--text-primary);
         }
 
-        .grades-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+        .grades-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
         }
 
-        .grade-item {
+        .grade-card {
+            padding: 20px 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 24px;
-            background: var(--gray-50);
-            border: 1px solid var(--gray-200);
-            border-radius: 8px;
-            transition: all 0.2s;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
         }
 
-        .grade-item:hover {
-            border-color: var(--black);
-            transform: translateX(-4px);
+        .grade-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
         }
 
-        .grade-item.failed {
-            background: var(--red-light);
-            border-color: var(--red);
+        .grade-card.failed {
+            background: var(--danger-bg);
+            border-color: var(--danger-border);
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.1);
         }
 
-        .grade-item.failed:hover {
-            border-color: var(--red);
+        .grade-card.failed:hover {
+            border-color: var(--danger);
+            box-shadow: 0 0 30px rgba(239, 68, 68, 0.2);
         }
 
         .subject-name {
             font-size: 1.125rem;
             font-weight: 600;
-            color: var(--gray-900);
+            color: var(--text-primary);
         }
 
         .grade-value {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--black);
+            font-size: 1.75rem;
+            font-weight: 900;
+            color: var(--text-primary);
         }
 
-        .grade-item.failed .grade-value {
-            color: var(--red);
+        .grade-card.failed .grade-value {
+            color: var(--danger);
+            text-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
         }
 
         /* قسم الملخص */
         .summary-section {
-            padding: 32px;
-            background: var(--gray-50);
-            border-top: 2px solid var(--gray-200);
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.2);
+            border-top: 1px solid var(--border);
             display: flex;
-            justify-content: flex-end;
+            justify-content: center;
             gap: 24px;
+            flex-wrap: wrap;
         }
 
-        .summary-item {
+        .summary-card {
+            padding: 24px 48px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
             text-align: center;
-            padding: 24px 40px;
-            background: var(--white);
-            border: 2px solid var(--black);
-            border-radius: 8px;
-            min-width: 160px;
+            min-width: 200px;
+            backdrop-filter: blur(10px);
         }
 
-        .summary-item label {
+        .summary-card label {
             display: block;
             font-size: 0.875rem;
-            color: var(--gray-600);
+            color: var(--text-muted);
             font-weight: 600;
             margin-bottom: 8px;
         }
 
-        .summary-item .value {
+        .summary-card .value {
             display: block;
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--black);
+            font-size: 2.5rem;
+            font-weight: 900;
         }
 
-        .summary-item.success {
-            background: var(--accent);
-            border-color: var(--accent);
+        .summary-card.success {
+            background: var(--success-bg);
+            border-color: rgba(16, 185, 129, 0.4);
         }
 
-        .summary-item.success .value {
-            color: var(--white);
+        .summary-card.success .value {
+            color: var(--success);
+            text-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
         }
 
-        .summary-item.success label {
-            color: rgba(255, 255, 255, 0.9);
+        .summary-card.fail {
+            background: var(--danger-bg);
+            border-color: var(--danger-border);
         }
 
-        /* Footer */
-        .footer {
-            padding: 32px 0;
-            text-align: center;
-            color: var(--gray-600);
-            font-size: 0.875rem;
-            border-top: 1px solid var(--gray-200);
-            background: var(--white);
+        .summary-card.fail .value {
+            color: var(--danger);
+            text-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
         }
 
-        @media (max-width: 640px) {
-            .search-hero h1 {
-                font-size: 2rem;
+        @media (max-width: 768px) {
+            .search-section h1 {
+                font-size: 2.5rem;
             }
             .search-form {
                 flex-direction: column;
@@ -325,15 +427,26 @@
             .search-btn {
                 width: 100%;
             }
-            .result-meta {
+            .student-name-value {
+                font-size: 2rem;
+            }
+            .student-meta {
                 flex-direction: column;
                 gap: 16px;
+            }
+            .grades-grid {
+                grid-template-columns: 1fr;
             }
             .summary-section {
                 flex-direction: column;
             }
-            .summary-item {
+            .summary-card {
                 width: 100%;
+            }
+            .student-name-section,
+            .grades-section,
+            .summary-section {
+                padding: 32px 24px;
             }
         }
 
@@ -343,11 +456,11 @@
 
         .spinner {
             display: inline-block;
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             border: 2px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
-            border-top-color: var(--white);
+            border-top-color: white;
             animation: spin 0.8s linear infinite;
         }
     </style>
@@ -357,16 +470,16 @@
     <div class="header">
         <div class="container">
             <div class="header-content">
-                <div class="logo">نتائج<span>.</span></div>
+                <div class="logo">منصة النتائج</div>
             </div>
         </div>
     </div>
 
-    <!-- Search Hero -->
-    <div class="search-hero">
+    <!-- Search Section -->
+    <div class="search-section">
         <div class="container">
-            <h1>استعلم عن نتيجتك الآن</h1>
-            <p>أدخل كود الطالب الخاص بك لعرض كشف العلامات</p>
+            <h1>استعلم عن نتيجتك</h1>
+            <p>أدخل كود الطالب لعرض كشف العلامات الكامل</p>
             
             <div class="search-form">
                 <input type="text" id="studentCode" class="search-input" placeholder="كود الطالب" autocomplete="off">
@@ -384,9 +497,11 @@
     <div id="resultSection" class="result-section">
         <div class="container">
             <div class="result-card">
-                <div class="result-header">
-                    <h2 id="studentName">اسم الطالب</h2>
-                    <div class="result-meta">
+                <!-- قسم اسم الطالب الكبير -->
+                <div class="student-name-section">
+                    <span class="student-name-label">اسم الطالب</span>
+                    <span class="student-name-value" id="studentName">-</span>
+                    <div class="student-meta">
                         <div class="meta-item">
                             <label>كود الطالب</label>
                             <span id="studentCode2">-</span>
@@ -398,31 +513,19 @@
                     </div>
                 </div>
 
+                <!-- قسم العلامات -->
                 <div class="grades-section">
                     <h3>العلامات</h3>
-                    <div class="grades-list" id="gradesList">
+                    <div class="grades-grid" id="gradesGrid">
                         <!-- يتم الملء تلقائياً -->
                     </div>
                 </div>
 
+                <!-- قسم الملخص -->
                 <div id="summarySection" class="summary-section">
-                    <div class="summary-item">
-                        <label>المعدل العام</label>
-                        <span class="value" id="studentAverage">0.00</span>
-                    </div>
-                    <div class="summary-item success">
-                        <label>الحالة</label>
-                        <span class="value" id="studentStatus">ناجح</span>
-                    </div>
+                    <!-- يتم الملء تلقائياً بناءً على الحالة -->
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <div class="footer">
-        <div class="container">
-            <p>© 2026 نظام نتائج الطلاب - جميع الحقوق محفوظة</p>
         </div>
     </div>
 
@@ -507,14 +610,14 @@
                 return;
             }
             
-            // عرض البيانات
+            // عرض اسم الطالب كاملاً
             document.getElementById('studentName').textContent = student['الاسم'] || 'غير محدد';
             document.getElementById('studentCode2').textContent = student['الكود'] || codeInput;
             document.getElementById('studentClass').textContent = student['الصف'] || 'غير محدد';
             
-            // بناء قائمة العلامات
-            const gradesList = document.getElementById('gradesList');
-            gradesList.innerHTML = '';
+            // بناء شبكة العلامات
+            const gradesGrid = document.getElementById('gradesGrid');
+            gradesGrid.innerHTML = '';
             
             let hasFailedSubject = false;
             
@@ -526,25 +629,48 @@
                 
                 if (isFailed) hasFailedSubject = true;
                 
-                const item = document.createElement('div');
-                item.className = `grade-item ${isFailed ? 'failed' : ''}`;
-                item.innerHTML = `
+                const card = document.createElement('div');
+                card.className = `grade-card ${isFailed ? 'failed' : ''}`;
+                card.innerHTML = `
                     <span class="subject-name">${key}</span>
                     <span class="grade-value">${isNaN(gradeVal) ? student[key] : gradeVal}</span>
                 `;
-                gradesList.appendChild(item);
+                gradesGrid.appendChild(card);
             });
             
-            // منطق إخفاء المعدل
+            // منطق عرض الحالة والمعدل
             const summarySection = document.getElementById('summarySection');
-            const statusText = student['النتيجة'] || student['الحالة'] || 'غير محدد';
+            summarySection.innerHTML = '';
             
-            if (statusText.includes('راسب') || hasFailedSubject) {
-                summarySection.style.display = 'none';
+            const statusText = student['النتيجة'] || student['الحالة'] || 'غير محدد';
+            const isFailed = statusText.includes('راسب') || hasFailedSubject;
+            
+            if (isFailed) {
+                // راسب: إظهار الحالة فقط بدون المعدل
+                const statusCard = document.createElement('div');
+                statusCard.className = 'summary-card fail';
+                statusCard.innerHTML = `
+                    <label>الحالة النهائية</label>
+                    <span class="value">راسب</span>
+                `;
+                summarySection.appendChild(statusCard);
             } else {
-                summarySection.style.display = 'flex';
-                document.getElementById('studentAverage').textContent = student['المعدل'] || '0.00';
-                document.getElementById('studentStatus').textContent = statusText;
+                // ناجح: إظهار المعدل والحالة
+                const avgCard = document.createElement('div');
+                avgCard.className = 'summary-card';
+                avgCard.innerHTML = `
+                    <label>المعدل العام</label>
+                    <span class="value">${student['المعدل'] || '0.00'}</span>
+                `;
+                summarySection.appendChild(avgCard);
+                
+                const statusCard = document.createElement('div');
+                statusCard.className = 'summary-card success';
+                statusCard.innerHTML = `
+                    <label>الحالة النهائية</label>
+                    <span class="value">ناجح</span>
+                `;
+                summarySection.appendChild(statusCard);
             }
             
             resultSection.style.display = 'block';
