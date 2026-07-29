@@ -7,11 +7,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #1e3a8a;       /* أزرق رسمي داكن */
+            --primary: #1e3a8a;
             --primary-light: #3b82f6;
-            --success: #059669;       /* أخضر رسمي */
+            --success: #059669;
             --success-bg: #d1fae5;
-            --danger: #dc2626;        /* أحمر رسمي */
+            --danger: #dc2626;
             --danger-bg: #fee2e2;
             --danger-border: #fecaca;
             --bg-page: #f8fafc;
@@ -48,21 +48,19 @@
             gap: 24px;
         }
 
-        /* تصميم البطاقات الرسمي */
         .card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 16px;
             padding: 40px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: box-shadow 0.3s ease;
         }
 
         .card:hover {
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
-        /* قسم البحث */
         .search-card {
             text-align: center;
             border-top: 4px solid var(--primary);
@@ -200,7 +198,6 @@
             }
         }
 
-        /* رأس بطاقة النتيجة (اسم الطالب) */
         .result-header {
             text-align: center;
             padding-bottom: 24px;
@@ -237,56 +234,92 @@
             border: 1px solid #bfdbfe;
         }
 
-        /* شبكة المواد */
-        .results-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 16px;
+        /* ========================================== */
+        /* تصميم الجدول (أسطر متتالية بدلاً من مربعات) */
+        /* ========================================== */
+        .grades-table-container {
             margin-bottom: 32px;
-        }
-
-        .subject-card {
-            background: #ffffff;
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 20px;
+            overflow: hidden;
+        }
+
+        .grades-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #ffffff;
+        }
+
+        .grades-table thead {
+            background: #f8fafc;
+        }
+
+        .grades-table th {
+            padding: 16px 24px;
+            text-align: right;
+            font-weight: 700;
+            color: var(--text-secondary);
+            border-bottom: 2px solid var(--border-color);
+            font-size: 0.95rem;
+        }
+
+        .grades-table th:last-child {
             text-align: center;
-            transition: all 0.2s ease;
         }
 
-        .subject-card:hover {
-            border-color: var(--primary-light);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        .grades-table td {
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
         }
 
-        /* تنسيق خاص للمواد الراسبة (أقل من 50) - رسمي وواضح */
-        .subject-card.failed {
-            background: var(--danger-bg);
-            border-color: var(--danger-border);
+        .grades-table td:last-child {
+            text-align: center;
         }
 
-        .subject-card.failed .subject-grade {
-            color: var(--danger);
-            font-weight: 900;
+        .grades-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .grades-table tbody tr:hover {
+            background: #f8fafc;
         }
 
         .subject-name {
-            display: block;
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin-bottom: 10px;
             font-weight: 600;
+            font-size: 1.05rem;
         }
 
         .subject-grade {
-            display: block;
-            font-size: 1.8rem;
+            font-size: 1.2rem;
             font-weight: 800;
             color: var(--text-primary);
         }
 
-        /* قسم الملخص (المعدل والحالة) */
+        /* تنسيق خاص للسطر الراسب (أقل من 50) */
+        .grades-table tbody tr.failed-row {
+            background: var(--danger-bg);
+        }
+
+        .grades-table tbody tr.failed-row:hover {
+            background: #fee2e2;
+        }
+
+        .grades-table tbody tr.failed-row .subject-name {
+            color: var(--danger);
+            font-weight: 700;
+        }
+
+        .grades-table tbody tr.failed-row .subject-grade {
+            color: var(--danger);
+            background: rgba(220, 38, 38, 0.1);
+            padding: 4px 16px;
+            border-radius: 6px;
+            border: 1px solid var(--danger-border);
+            display: inline-block;
+        }
+
+        /* قسم الملخص */
         .summary-section {
             display: flex;
             justify-content: center;
@@ -340,9 +373,6 @@
             .input-group {
                 flex-direction: column;
             }
-            .button {
-                width: 100%;
-            }
             .result-header h2 {
                 font-size: 1.6rem;
             }
@@ -354,6 +384,9 @@
             }
             .card {
                 padding: 24px;
+            }
+            .grades-table th, .grades-table td {
+                padding: 12px 16px;
             }
         }
     </style>
@@ -384,11 +417,21 @@
                 <span id="studentClass" class="class-badge">الصف</span>
             </div>
             
-            <div class="results-grid" id="resultsGrid">
-                <!-- سيتم حقن المواد هنا تلقائياً -->
+            <!-- تم استبدال الشبكة بجدول رسمي -->
+            <div class="grades-table-container">
+                <table class="grades-table">
+                    <thead>
+                        <tr>
+                            <th>المادة الدراسية</th>
+                            <th>العلامة</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultsTableBody">
+                        <!-- سيتم حقن الأسطر هنا تلقائياً -->
+                    </tbody>
+                </table>
             </div>
 
-            <!-- تم فصل المعدل عن الحالة لضمان ظهور الحالة دائماً حتى عند الرسوب -->
             <div class="summary-section" id="summarySection">
                 <div class="info-box" id="averageBox">
                     <span>المعدل العام</span>
@@ -483,49 +526,43 @@
                 return;
             }
             
-            // عرض معلومات الطالب
             document.getElementById('studentName').textContent = student['الاسم'] || 'غير محدد';
             document.getElementById('studentClass').textContent = student['الصف'] || 'غير محدد';
             
-            // قائمة المواد
             const subjects = ['الرياضيات', 'الفيزياء', 'الكيمياء', 'الأحياء', 'العربي', 'الكردي', 'الإنكليزية', 'الإسلامية'];
-            const resultsGrid = document.getElementById('resultsGrid');
-            resultsGrid.innerHTML = '';
+            const resultsTableBody = document.getElementById('resultsTableBody');
+            resultsTableBody.innerHTML = '';
             
             subjects.forEach(subject => {
                 const gradeStr = student[subject];
                 const grade = parseFloat(gradeStr);
                 const isFailed = !isNaN(grade) && grade < 50;
                 
-                const subjectCard = document.createElement('div');
-                subjectCard.className = `subject-card ${isFailed ? 'failed' : ''}`;
-                subjectCard.innerHTML = `
-                    <span class="subject-name">${subject}</span>
-                    <span class="subject-grade">${isNaN(grade) ? '-' : grade}</span>
+                // إنشاء سطر (tr) بدلاً من مربع (div)
+                const row = document.createElement('tr');
+                row.className = isFailed ? 'failed-row' : '';
+                row.innerHTML = `
+                    <td class="subject-name">${subject}</td>
+                    <td><span class="subject-grade">${isNaN(grade) ? '-' : grade}</span></td>
                 `;
-                resultsGrid.appendChild(subjectCard);
+                resultsTableBody.appendChild(row);
             });
             
-            // التحقق من حالة الطالب (تعديل طفيف لضمان ظهور الحالة حتى عند الرسوب)
             const status = student['النتيجة'];
             const averageBox = document.getElementById('averageBox');
             const statusBox = document.getElementById('statusBox');
             
             if (status && status.includes('راسب')) {
-                // إخفاء صندوق المعدل فقط
                 averageBox.style.display = 'none';
-                // إظهار صندوق الحالة كـ "راسب"
                 statusBox.className = 'info-box status-box fail';
                 document.getElementById('studentStatus').textContent = 'راسب';
             } else {
-                // إظهار صندوق المعدل والحالة كـ "ناجح"
                 averageBox.style.display = 'block';
                 document.getElementById('studentAverage').textContent = student['المعدل'] || '0.00';
                 document.getElementById('studentStatus').textContent = status || 'ناجح';
                 statusBox.className = 'info-box status-box pass';
             }
             
-            // إظهار بطاقة النتيجة بتأثير حركي
             resultCard.style.display = 'block';
             void resultCard.offsetWidth; 
             resultCard.classList.add('show');
